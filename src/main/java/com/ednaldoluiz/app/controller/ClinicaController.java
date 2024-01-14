@@ -1,20 +1,27 @@
 package com.ednaldoluiz.app.controller;
 
-import java.util.Scanner;
-
-import com.ednaldoluiz.core.service.ConsultaService;
-import com.ednaldoluiz.core.service.PacienteService;
+import com.ednaldoluiz.core.impl.ConsultaServiceImpl;
+import com.ednaldoluiz.core.impl.PacienteServiceImpl;
 
 public class ClinicaController {
 
-    private static final Scanner scanner = new Scanner(System.in);
-    private final PacienteService pacienteService;
-    private final ConsultaService consultaService;
+    private final PacienteServiceImpl pacienteService;
+    private final ConsultaServiceImpl consultaService;
 
-    public ClinicaController(PacienteService pacienteService, ConsultaService consultaService) {
+    public ClinicaController(PacienteServiceImpl pacienteService, ConsultaServiceImpl consultaService) {
         this.pacienteService = pacienteService;
         this.consultaService = consultaService;
     }
 
-    public void iniciarSistema() {}
+    public void adicionarPaciente() {
+        pacienteService.adicionarPaciente();
+    }
+
+    public void listarPacientesEAgendarConsulta() {
+        consultaService.agendarConsulta();
+    }
+
+    public void cancelarConsulta() {
+        consultaService.cancelarConsulta();
+    }
 }
