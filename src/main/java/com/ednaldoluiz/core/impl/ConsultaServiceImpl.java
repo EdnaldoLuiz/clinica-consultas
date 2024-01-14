@@ -8,66 +8,86 @@ import java.util.Scanner;
 import java.util.UUID;
 
 import com.ednaldoluiz.core.service.ConsultaService;
+import com.ednaldoluiz.core.validator.ConsultaValidator;
 import com.ednaldoluiz.utils.FileUtil;
 import com.ednaldoluiz.utils.TerminalUtil;
 
 public class ConsultaServiceImpl implements ConsultaService {
-    
+
+    @Override
     public void agendarConsulta() {
         Scanner scanner = new Scanner(System.in);
         try {
             String nomeArquivoPacientes = "pacientes.csv";
             List<String> pacientes = FileUtil.lerArquivo(nomeArquivoPacientes);
 
-            if (pacientes.isEmpty()) {
-                System.out.println("Nenhum paciente cadastrado.");
-                return;
-            }
-
             System.out.println("\nLista de Pacientes:\n");
             System.out.println("+----+------------------+------------------------+");
             System.out.println("| Nº |       Nome       |        Telefone        |");
             System.out.println("+----+------------------+------------------------+");
-
+    
             for (int numeroPaciente = 1; numeroPaciente < pacientes.size(); numeroPaciente++) {
                 String[] pacienteInfo = pacientes.get(numeroPaciente).split(", ");
                 String nome = pacienteInfo[1];
                 String telefone = pacienteInfo[2];
-
+    
                 System.out.printf("| %-2d | %-16s | %-22s |\n", numeroPaciente, nome, telefone);
             }
-
+    
             System.out.println("+----+------------------+------------------------+");
-
+    
             System.out.print("\nEscolha o número correspondente ao paciente para agendar a consulta: ");
             int escolhaPaciente = scanner.nextInt();
-
+    
             if (escolhaPaciente >= 1 && escolhaPaciente <= pacientes.size()) {
                 String pacienteSelecionado = pacientes.get(escolhaPaciente);
-
+    
                 String[] pacienteSelecionadoInfo = pacienteSelecionado.split(", ");
                 String nomePacienteSelecionado = pacienteSelecionadoInfo[1];
-
+    
                 System.out.print("Digite o dia da consulta: ");
                 String diaConsulta = new Scanner(System.in).nextLine();
+    
+                if (ConsultaValidator.isDataRetroativa(diaConsulta)) {
+                    TerminalUtil.mensagemFormatada(TerminalUtil.RED, "Erro: Consultas não podem ser marcadas para datas retroativas.");
+                    return;
+                }
 
-                System.out.print("Digite a hora da consulta: ");
+                int dia = Integer.parseInt(diaConsulta);
+                if (dia > 31) {
+                    TerminalUtil.mensagemFormatada(TerminalUtil.RED, "Erro: O dia deve ser menor ou igual a 31.");
+                    return;
+                }
+    
+                System.out.print("Digite a hora da consulta no formato 00:00: ");
                 String horaConsulta = new Scanner(System.in).nextLine();
 
+                if (!ConsultaValidator.isHoraValida(horaConsulta)) {
+                    TerminalUtil.mensagemFormatada(TerminalUtil.RED, "Erro: o formato da hora é inválido. Use o formato 00:00.");
+                    return;
+                }
+    
+                String nomeArquivoAgendamentos = "agendamentos.csv";
+    
+                if (ConsultaValidator.isConsultaAgendada(diaConsulta, horaConsulta, FileUtil.lerArquivo(nomeArquivoAgendamentos))) {
+                    System.out.println(TerminalUtil.RED + "Erro: Data e hora já agendadas. Escolha outro horário."
+                            + TerminalUtil.RESET);
+                    return;
+                }
+    
                 System.out.print("Digite a especialidade da consulta: ");
                 String especialidadeConsulta = new Scanner(System.in).nextLine();
-
-                String nomeArquivoAgendamentos = "agendamentos.csv";
+    
                 try {
                     FileWriter fileWriter = new FileWriter(nomeArquivoAgendamentos, true);
                     BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
+    
                     bufferedWriter.write(UUID.randomUUID().toString() + ", " + nomePacienteSelecionado + ", "
                             + diaConsulta + ", " + horaConsulta + ", "
                             + especialidadeConsulta);
                     bufferedWriter.newLine();
                     bufferedWriter.close();
-
+    
                     System.out.println(TerminalUtil.GREEN + "Consulta agendada com sucesso." + TerminalUtil.RESET);
                 } catch (IOException e) {
                     System.err.println("Erro ao escrever no arquivo: " + e.getMessage());
@@ -79,7 +99,7 @@ public class ConsultaServiceImpl implements ConsultaService {
             System.err.println("Erro ao ler o arquivo de pacientes: " + e.getMessage());
         }
     }
-
+    
     @Override
     public void cancelarConsulta() {
         Scanner scanner = new Scanner(System.in);
