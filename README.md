@@ -1,129 +1,101 @@
-<h1 align=center>🛒 market-manager</h1>
 <div align=center>
-    <img width=250px src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/4a2aca7e-eda6-4473-9c6c-f20667c19426">
+
+# Sistema de Clínica de Consultas
+
 </div>
 
-<h1>📚 Índice </h1>
-<ol>
-    <li><a href="#tela-de-registro">Tela de Registro</a></li>
-    <li><a href="#tela-esqueceu-a-senha">Tela de Esqueceu a Senha</a></li>
-    <li><a href="#tela-funcionarios">Tela de Funcionários</a></li>
-    <li><a href="#tela-produtos">Tela de Produtos</a></li>
-    <li><a href="#tela-registrar-produtos">Tela de Registrar Produtos</a></li>
-    <li><a href="#tela-registrar-funcionarios">Tela de Registrar Funcionários</a></li>
-    <li><a href="#executar-o-projeto">Executar o Projeto</a></li>
-    <li><a href="#tecnologias-utilizadas">Tecnologias Utilizadas</a></li>
-</ol>
+Este é um sistema de clínica de consultas para agendar e cancelar consultas. O programa é executado via terminal e possui as seguintes funcionalidades:
+> **Observação:** Para executar o programa, utilize o terminal e siga as instruções apresentadas.
+## 📝 Funcionalidades do Desafio:
 
-<h2 id="tela-de-registro">✏️ Tela de Registro </h2>
-<p>Tela de registro onde é necessário ter seu e-mail cadastrado por um Admin e uma senha.</p>
-<div align=center>
-    <img width=80% src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/445af718-f84f-4173-8daf-501196afb194">
-</div>
+1. **Cadastrar um Paciente:**
+   - O programa solicita o nome e o telefone do paciente.
+   - Após o cadastro, exibe a mensagem "Paciente cadastrado com sucesso".
+   - Adiciona o paciente à lista de Pacientes Cadastrados.
 
-<br>
+2. **Marcações de Consultas:**
+   - Ao selecionar essa opção, o programa exibe uma lista numerada dos pacientes cadastrados.
+   - Ao escolher o número correspondente a um paciente, solicita o dia, a hora e a especialidade desejada para a consulta.
+   - Após o envio desses dados, o agendamento é adicionado à lista de agendamentos.
 
-- **Campos de Entrada:** Existem campos para inserir o e-mail e senha do usuário.
-- **Botão de Login:** O botão "LOGIN" realiza a tentativa de autenticação com as credenciais inseridas.
-- **Redirecionamento:** Após a autenticação bem-sucedida, os usuários são redirecionados para a tela principal, sendo exibida uma visão diferente dependendo do cargo do usuário (Admin ou Funcionário).
+3. **Cancelamento de Consultas:**
+   - Ao selecionar essa opção, o programa exibe uma lista numerada dos agendamentos existentes.
+   - Ao escolher o número correspondente ao agendamento que deseja cancelar, é exibida uma mensagem informando a data, a hora e a especialidade da consulta agendada.
+   - O usuário pode optar por cancelar a consulta.
+   - Ao confirmar o cancelamento, o agendamento é removido da lista.
 
-<h3>Modal para Admin</h3>
-<div align=center>
-    <img width=50% src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/c7ce5974-904a-43b1-87a6-2fd288021c55">
-</div>
+4. **Sair:**
+   - Encerra a execução do programa.
 
-<br>
+---
 
-- **Modal para Admin:** Em caso de autenticação bem-sucedida, um modal pode ser exibido se o usuário autenticado for um administrador.
+## ❌ Tratamento de Erros:
 
-<h2 id="tela-esqueceu-a-senha">🔑 Tela de Esqueceu a Senha </h2>
-<div align=center>
-    <img src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/e5b6aeca-958f-4288-91e8-1d49c6107596">
-</div>
+- **Cadastro de Paciente Duplicado:**
+  - O paciente não pode ser cadastrado mais de uma vez.
+  - Para evitar duplicidade, garanta que o número de telefone seja diferente para cada cadastro.
+  - Caso ocorra uma tentativa de cadastro duplicado, exibe a mensagem "Paciente já cadastrado!" e retorna ao menu principal.
 
-<br>
+- **Marcação de Consulta em Data e Hora Já Agendadas:**
+  - Pacientes não podem marcar consultas em dias e horários já agendados.
+  - Verifica se a data e a hora selecionadas estão disponíveis antes de realizar o agendamento.
 
-- **Esqueceu a Senha:** Um link para "Esqueceu a Senha" permite que os usuários solicitem a recuperação de senha.
+- **Consulta Retroativa:**
+  - Consultas não podem ser marcadas antes da data atual.
+  - Certifica-se de que o usuário não possa agendar consultas retroativas.
 
-<h2 id="tela-funcionarios">👥 Tela de Funcionários </h2>
+---
 
-<p>A tela de funcionários permite visualizar, adicionar e excluir membros da equipe do sistema. Principais funcionalidades:</p>
+## 🗃️ Armazenamento Persistente:
 
-<div align=center>
-    <img width=80% src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/e2c10adb-c422-4a8b-bf10-bb8736af1fdc">
-</div>
+- A minha ideia foi armazenar as informações dos pacientes em um arquivo csv, que é amplamente utilizado para armazenamento de dados e tem uma exibição como tabela aqui no GitHub.
+  - [agendamentos.csv](https://github.com/EdnaldoLuiz/clinica-consultas/blob/main/agendamentos.csv)
+  - [pacientes.csv](https://github.com/EdnaldoLuiz/clinica-consultas/blob/main/pacientes.csv)
 
-<br>
+---
 
-- **Adicionar Funcionário:** Clicando no botão "Registrar Funcionário", é possível abrir um formulário para inserir as informações do novo funcionário. Após adição, a tabela é atualizada automaticamente.
-- **Excluir Funcionário:** Ao clicar em "Excluir Funcionário", é possível remover um membro da equipe selecionado na tabela.
-
-<h2 id="tela-produtos">🛍️ Tela de Produtos</h2>
-
-<p>A tela de produtos permite visualizar, adicionar e importar produtos no inventário do sistema. Principais funcionalidades:</p>
-
-<div align=center>
-    <img width=80% src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/2e5b82ee-8324-485f-a761-0ca5ca8a793f">
-</div>
-
-<br>
-
-- **Adicionar Produto:** Ao clicar em "Adicionar Produto", é aberto um formulário para inserir informações do novo produto, como nome, preço, quantidade e categoria. Após a adição, a tabela é atualizada automaticamente.
-- **Importar Produtos:** Clicando em "Importar Produtos", é possível realizar a importação de produtos para o sistema. Esta funcionalidade facilita a inclusão em massa de novos itens.
-- **Ordenar e Filtrar:** É possível selecionar a categoria desejada e ordenar os produtos por preço em ordem crescente ou decrescente, utilizando os menus suspensos correspondentes.
-
-<h2 id="tela-registrar-produtos">📝 Tela de Registrar Produtos</h2>
-<div align=center>
-    <img src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/f152974f-daba-4e48-a40b-70fb5a704f20">
-</div>
-<br>
-
-- **Campos de Entrada:** Nome, preço, quantidade e categoria do produto.
-- **Botão de Adicionar:** Inclui o novo produto na tabela de produtos.
-- **Interface Intuitiva:** Design amigável para facilitar o registro de produtos.
-
-<h2 id="tela-registrar-funcionarios">📝 Tela de Registrar Funcionários </h2>
-<div align=center>
-    <img align=center src="https://github.com/EdnaldoLuiz/market-manager/assets/112354693/0d79223a-b683-45c0-b3bd-260448fd171d">
-</div>
-<br>
-
-- **Campos de Entrada:** Nome, e-mail, CPF e cargo do funcionário.
-- **Botão de Adicionar:** Inclui o novo funcionário na tabela de funcionários.
-- **Escolha de Cargo:** Admin ou Funcionário, selecionados através de uma lista suspensa.
-
-<h2 id="executar-o-projeto">▶️ Executar o Projeto</h2>
+## ▶️ Executar o Projeto
 
 ```bash
-git clone https://github.com/EdnaldoLuiz/market-manager.git
-cd market-manager
+git clone https://github.com/EdnaldoLuiz/clinica-consultas.git
+cd clinica-consultas
 ```
+> Obs: Precisa ter o JDK instalado e abra em uma IDE Java de sua escolha
 
-> Obs: Precisa ter o JDK instalado e abra em uma IDE Java de sua escolha. Ou você pode executar o market-manager-app.jar disponível 
+---
 
-<h2 id="tecnologias-utilizadas">🛠️ Tecnologias Utilizadas:</h2> 
+## 👨‍💻 Motivações
+
+### Por que Java?
+
+Java é meu maior forte e a linguagem que eu tenho mais estudado a cerca de 2 anos, 
+na qual considero uma linguagem incrivel para desenvolver sistemas de alto nivel para Back-end,
+mas sempre estou aberto a novas tecnologias, o principal é conseguir resolver problemas!
+
+### Por que CSV?
+
+Optei por utilizar CSV porque ele oferece várias vantagens em cenários onde a estrutura de dados precisa ser armazenada de forma organizada e legível por máquinas, sendo o formato mais utilizado para armazenamento de dados.
+
+## 🛠️ Tecnologias Utilizadas:
 
 <table align="center" width=1000px>
     <thead>
         <tr>
             <th><img src="https://skillicons.dev/icons?i=java" width=80px height=80px/></th>
-            <th><img src="https://skillicons.dev/icons?i=idea" width=80px height=80px/></th>
-            <th><img src="https://skillicons.dev/icons?i=maven" width=80px height=80px/></th>
-            <th><img src="https://skillicons.dev/icons?i=postgres" width=80px height=80px/></th>
+            <th><img src="https://skillicons.dev/icons?i=vscode" width=80px height=80px/></th>
+          <th><img src="https://skillicons.dev/icons?i=maven" width=80px height=80px/></th>
         </tr>
     </thead>
     <tbody align="center">
         <tr>
             <td>Java</td>
-            <td>Intellij</td>
+            <td>VSCode</td>
             <td>Maven</td>
-            <td>PostgreSQL</td>
         </tr>
         <tr>
-            <td>🔖 8</td>
-            <td>🔖 2023.3.2</td>
+            <td>🔖 17</td>
+            <td>🔖 1.83</td>
             <td>🔖 3.9.6</td>
-            <td>🔖 16.1.1</td>
         </tr>
     </tbody>
 </table>
